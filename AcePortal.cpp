@@ -49,7 +49,7 @@ void MainMenu()
 	mainMenu:
 		char menuSelect; //begin main menu greeting
 		cout << "\n\n\n\t\t\t";
-		cout << "Hello, Bryce! Welcome to AcePortal v.01! \n\n\n";
+		cout << "Hello, Anon! Welcome to AcePortal v.01! \n\n\n";
 		cout << "\t\t\t\tWhat would you like to do today?\n\n\t\t\tG = Game\t\t\t\tF = Food\n\n\n\n";
 		cin >> menuSelect;
 
