@@ -2,16 +2,167 @@
 #include "iostream"
 #include "string"
 #include <ctime>
-void MainMenu();
-void RandomNums();
-int login(int x);
-void LoginConfirm();
-void GameMenu();
+#include <windows.h>
+#include <tuple>
+#include "AdvenDefs.h"
 
+
+/*class Games
+{	
+	bool hasEXP = true;
+	bool hasMod = true;
+public:	
+	Games() = default;
+	int Strength = 10, Health = 10, Wisdom = 10, Intelligence = 10, Experience = 10; //basic RPG variables, change numbers to change starting values.
+	void StatsMod();
+	void StatsMenu();
+	void print();
+	void gameover();
+};*/
+
+
+void MainMenu();
+int login(int x);
+void AdvenGame();
+void RandomNums();
+
+void LoginConfirm();
 using namespace std;
-int main()
+
+Games run;
+/*void Games::StatsMod()
 {
-LoginConfirm();	
+
+	int stMod, hpMod, wisMod, inMod; //stFin, hpFin, wisFin, inFin, expFin;
+	int newStrength, newHealth, newWisdom, newIntelligence;
+
+
+	char select;
+	if (hasEXP == true)
+	{
+		cout << "Available points: " << Experience << endl;
+		//print();
+		while (Experience > 0)
+		{
+		LevelUp:
+			cout << "\t\tStrength: " << Strength << endl;
+			cout << "\t\tHealth: " << Health << endl;
+			cout << "\t\tWisdom: " << Wisdom << endl;
+			cout << "\t\tIntelligence: " << Intelligence << endl;
+			cout << "\n\t\tAvailable Experience Points: " << Experience << endl;
+			cout << "Choose which stat you would like to modify: S, H, W, I, R to Return: ";
+			cin >> select;
+			switch (select)
+			{
+			case 'S':
+				cout << "How many points?\n";
+				cin >> stMod;
+				if (stMod > Experience )
+				{
+					cout << "Wrong Value" << endl;
+					goto LevelUp;				
+				}
+				else
+				{
+					Experience = Experience - stMod;
+					newStrength = Strength + stMod;
+					cout << "Strength is now: " << newStrength << endl;
+					hasMod = true;
+					Strength = newStrength;
+					return;
+				}
+			case 'H':
+				cout << "How many points?" << endl;
+				cin >> hpMod;
+				if (hpMod>Experience)
+				{
+					cout << "Wrong Value" << endl << "\n";
+					goto LevelUp;			
+				}
+				else
+				{
+					Experience = Experience - hpMod;
+					newHealth = Health + hpMod;
+					cout << "Health is now: " << newHealth << endl;
+					hasMod = true;
+					Health = newHealth;
+					return;
+				}
+			case 'W':
+				cout << "How many points?" << endl;
+				cin >> wisMod;
+				if (wisMod > Experience)
+				{
+					cout << "Wrong Value" << endl;
+					goto LevelUp;
+					
+				}
+				else
+				{
+					Experience = Experience - wisMod;
+					newWisdom = Wisdom + wisMod;
+					cout << "Wisdom is now: " << newWisdom << endl;
+					hasMod = true;
+					Wisdom = newWisdom;
+					return;
+				}
+			case 'I':
+				cout << "How many points?\n";
+				cin >> inMod;
+				if (inMod > Experience)
+				{
+					cout << "Wrong Value" << endl << "\n";
+					goto LevelUp;
+				
+				}
+				else
+				{
+					Experience = Experience - wisMod;
+					newIntelligence = Intelligence + inMod;
+					std::cout << "Intelligence is now: " << newIntelligence << endl;
+					hasMod = true;
+					Intelligence = newIntelligence;
+					return;
+				}
+			case 'R':
+				break;
+			}
+			return;
+		}
+	}
+}*/
+
+void GameMenu()
+{
+GameSelectMenu: //Game Selection Menu
+	char gameType;
+	cout << "\n\n\n";
+	cout << "\t\t\t\tGame Selection\n\t\t\t\tR-Random Numbers\n\t\t\t\tP-Pong\n\t\t\t\tA-Adventure\n\t\t\t\tM-MainMenu\n\n";
+	cin >> gameType;
+	switch (gameType)
+	{
+	case 'R':
+		RandomNums();
+		break;
+	case 'A':
+		AdvenGame();
+		break;
+	case 'M':
+		MainMenu();
+		break;
+	default:
+		cout << "Bad input, please try again\n";
+		break;
+	}
+	goto GameSelectMenu;
+	return;
+}
+
+
+
+int main(int argc, char*argv[])
+{
+	LoginConfirm();
 }
 
 int login(int x)
@@ -49,7 +200,7 @@ void MainMenu()
 	mainMenu:
 		char menuSelect; //begin main menu greeting
 		cout << "\n\n\n\t\t\t";
-		cout << "Hello, Anon! Welcome to AcePortal v.01! \n\n\n";
+		cout << "Hello, Bryce! Welcome to The Proving Grounds v.01! \n\n\n";
 		cout << "\t\t\t\tWhat would you like to do today?\n\n\t\t\tG = Game\t\t\t\tF = Food\n\n\n\n";
 		cin >> menuSelect;
 
@@ -70,33 +221,6 @@ void MainMenu()
 		return;
 }
 
-
-void GameMenu()
-{
-GameSelectMenu: //Game Selection Menu
-	char gameType;
-	cout << "\n\n\n";
-	cout << "\t\t\t\tGame Selection\n\t\t\t\tR-Random Numbers\n\t\t\t\tP-Pong\n\t\t\t\tA-Adventure\n\t\t\t\tM-MainMenu\n\n";
-	cin >> gameType;
-	switch (gameType)
-	{
-		case 'R':
-			RandomNums();
-			break;
-		//case 'A':
-			//AdvenGame();
-			//break;
-	case 'M':
-		break;
-	default:
-		cout << "Bad input, please try again\n";
-		break;
-		
-	}
-
-	goto GameSelectMenu;
-	return;
-}
 
 void RandomNums()
 {
@@ -144,65 +268,102 @@ gameMenu:
 	default:
 		cout << "Please input a valid choice\nP-Play Again\nG-Games Menu\nM-Main Menu\n";
 		goto gameMenu;
-
-
 	}
 
 
 
 }
 
+
+ 
+
+
 void AdvenGame()
 {
-	/*Objectives for v.01:
-	  1. Create basic graphics 
-	      -defined border; I want (ASCII 178) for vertical, and (ASCII 205) for horizontal.
-		  -clear text box, defined with above parameters
-		  -stretch goal: potential inventory box. 
-	  2. Create basic story layout
-	      -We should be able to accept a quest, answer a riddle, enter a castle, solve a puzzle, acquire a sword, and kill a monster.
-		  -NPCs: Princess, Guard, Goblin.
-		  -v.01 will include only two dialogue choices per NPC, each with unique reactions and implications. Story will be very short initially.
-	  3. Establish core game logic
-	      -Outside of being text-based, I want the gamer to be able to know what items they have.
-		  -v.01 will rely on strictly boolean logic for items (sword = 0/sword = 1). Future plans to implement pointers.
-		  -Stretch goal: implement health and damage system. Will require random number generators for each item and NPC.
-		  -Future goal: Player stats including ATK, MAG, DEF, INT, etc that will influence combat and puzzle outcomes.
-	  4. Basic story:
-		 -Introduction to the world
-			-Make up some retarded bullshit you absolute shitheel.
-		 -Player is a knight
-		 -Princess asks knight to save her kingdom after a dark wizard conquers her castle
-		    -YES: Player heads to castle, meets guard
-			-NO: GAME OVER (add some snark)
-		 -Guard will not let knight in until he solves a riddle
-		    -RIDDLE: Guard will allow play in if they can solve his riddle
-					-riddle: What starts life with four legs, has two legs in the middle, and ends life with three? 
-					         -ANSWER: Human
-							          -May want to throw in numerous "right answers" if checking a string.
-							 -WRONG ANSWER:
-							          -GAME OVER
-			-ATTACK: GAME OVER: without a weapon, the guard cuts player's head off
-		 -There is a sword held by a statue
-		    -RECOVER: a puzzle is initiated
-					  -Statue reads: "The Vision of Justice"
-									-OPTIONS:
-										-Pull at sword
-											-does nothing, Goblin approaches
-										-Remove statue's eyeballs
-											-solution, player receives sword
-										-Pull on statue
-											-GAME OVER the statue crushed you, retard.
-										-Push statue over
-										    -Goblin shows up to investigate the noise
-		 -A Goblin approaches, "combat ensues"
-			-If player has sword:
-				-ATTACK
-					-Kills Goblin
-				-RUN
-					-GAME OVER goblins are quick litter fuckers
-			-If player does not have sword:
-				-GAME OVER the goblin straight up Tyson Foods your ass.
-					  */
+	
+	string playername;
+	bool gamedone = false, statsmenu = false;
+	
+	char decision;
+
+
+	cout << "Please input Player Name:\n";
+	cin >> playername;
+
+	cout << "Welcome, " << playername << " to NuAdven\n\n";
+	cout << "\t\t\tLong Ago, somethingsomethingsomethingblahblahblah just test game mechanics.\n\n";
+	
+	while (!gamedone)
+
+	{
+
+		decision1:
+			cout << "\t\t\tPrincess encounter: Please save kingdom\n";
+			cin >> decision;
+
+			switch (decision)
+			{
+			case 'Y':
+				cout << "\t\tThe Princess thanks you. You being your journey to the castle\n\n";
+				break;
+			case 'N':
+				cout << "\t\tEverything dies, gg\n";
+				run.gameover();
+			case 'S':
+				run.StatsMenu();
+				goto decision1;	
+			default:
+				cout << "Input something that makes sense, dingus\n";
+				goto decision1;
+			}
+
+			return;
+	}
 }
 
+
+/*void Games::gameover()
+{
+	cout << "You dead, guy\n";
+	GameMenu();
+}*/
+
+/*void Games::StatsMenu()
+{
+
+	char choice;
+	cout << "\t\tStats, M for modification, L for List: \n";
+	cin >> choice;
+	switch (choice)
+	{
+	case 'L':
+		print();
+		break;
+	case 'M':
+		StatsMod();
+		break;
+	default:
+		cout << "Wrong input: ";
+		break;
+	}
+	return;
+
+}*/
+ 
+
+  
+ 
+ /*void Games::print()
+ {
+	 //Reference Stats() and prints its current values
+	
+	 
+	 cout << "\t\tStrength is: " <<Strength<<endl;
+	 cout << "\t\tHealth is: " << Health<<endl;
+	 cout << "\t\tWisdom is: " << Wisdom<<endl;
+	 cout << "\t\tIntelligence is: " << Intelligence<<endl;
+	 cout << "\t\tExperience points: " << Experience<<endl;
+
+
+ }*/
+ 
